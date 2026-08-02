@@ -16,6 +16,12 @@ async function getUserByUsername(username) {
     });
 }
 
+async function getUserById(id) {
+    return await prisma.users.findFirst({
+        where: { id }
+    });
+}
+
 async function updateUserInfo(userId, updatedData) {
     await prisma.users.update({
         where: { id: userId},
@@ -26,5 +32,6 @@ async function updateUserInfo(userId, updatedData) {
 module.exports = {
     createUser,
     getUserByUsername,
+    getUserById,
     updateUserInfo
 }

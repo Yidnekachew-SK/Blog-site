@@ -13,6 +13,7 @@ model Users {
   password String
   role String @default("user")
   comments Comments[]
+  likes CommentLikes[]
 }
 
 model Posts {
@@ -21,7 +22,6 @@ model Posts {
   article String
   createdAt DateTime
   status String @default("unpublished")
-  likeCount Int @default(0)
   comments Comments[]
 }
 
@@ -32,4 +32,13 @@ model Comments {
   userId Int
   post Posts @relation(fields: [postId], references: [id])
   postId Int
+  likes CommentLikes[]
+}
+
+model CommentLikes {
+  id Int @id @default(autoincrement())
+  user Users @relation(fields: [userId], references: [id])
+  userId Int
+  comment Comments @relation(fields: [commentId], references: [id])
+  commentId Int
 }

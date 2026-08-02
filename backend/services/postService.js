@@ -12,17 +12,16 @@ async function getUnpublishedPosts() {
     });
 }
 
-async function getPostsWithComments() {
-    return await prisma.posts.findMany({
-        where: { status: "published" },
-        include: { comments: true }
-    });
-}
-
 async function getSinglePostWithComments(postId) {
     return await prisma.posts.findFirst({
         where: { id: postId },
-        include: { comments: true }
+        include: { comments: {
+            include: {
+                _count: { 
+                    select: { likes: true}
+                }
+            }
+        }}
     });
 }
 
@@ -49,20 +48,11 @@ async function deletePost(postId) {
     });
 }
 
-async function increaseLikeCount(postId) {
-    await prisma.posts.update({
-        where: { id: postId },
-        data: { likeCount: likeCount + 1}
-    })
-}
-
 module.exports = {
     getPublishedPosts,
     getUnpublishedPosts,
-    getPostsWithComments,
     getSinglePostWithComments,
     createPost,
     UpdatePost,
-    deletePost,
-    increaseLikeCount
+    deletePost
 }
