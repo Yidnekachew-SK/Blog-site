@@ -17,9 +17,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(express.json())
 
-app.use('/', authRouter);
-app.use('/posts', postRouter);
-app.use('/post/:id/comment',passport_jwt.authenticate('jwt', {session: false}), commentRouter);
+app.use('/api/', authRouter);
+app.use('/api/posts', postRouter);
+app.use('/api/post/:id/comment',passport_jwt.authenticate('jwt', {session: false}), commentRouter);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+
+  res.status(err.status || 500).json({
+    error: err.message || "Internal Server Error",
+  });
+});
 
 app.listen(port, (error) => {
     if (error) {

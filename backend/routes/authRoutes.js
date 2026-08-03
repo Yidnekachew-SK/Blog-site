@@ -1,18 +1,22 @@
 const { Router } = require('express');
 const authController = require('../controller/authController');
 const passport = require("passport");
+require('../middleware/passport');
 
 const authRouter = Router();
 
-authRouter.get('/login', authController.loginGet);
+authRouter.post('/login', (req, res, next) => {
+    passport.authenticate("local", { session: false }, (err, user, info) => {
+        if (err) return next(err);
 
-authRouter.post('/login', 
-    passport.authenticate('local', { session: false }), 
-    authController.loginPost
-);
+        if (!user) {
+        return res.status(401).json({ error: info.message });
+        }
 
-authRouter.get('/signup', authController.signup);
+        return authController.login(req, res, next, user);
+    })(req, res, next)
+});
 
-authRouter.post('/signup', authController.signupPost);
+authRouter.post('/signup', authController.signup);
 
 module.exports = authRouter

@@ -6,10 +6,8 @@ const authService = require('../services/authService');
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
-    console.log('LocalStrategy invoked with:', username, password);
     try {
         const user = await authService.getUserByUsername(username);
-        console.log(await authService.getUserByUsername('yankee'));
 
         if (!user) {
             return done(null, false, { message: ["Incorrect username", ""] });
