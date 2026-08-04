@@ -2,7 +2,8 @@ const { body, validationResult, matchedData } = require('express-validator');
 const commentService = require("../services/commentService");
 
 const validateUserComment = [
-
+    body("comment").trim()
+        .matches(/^[a-zA-Z0-9\s.,'"!?-]+$/).withMessage('Invalid character used')
 ]
 
 const createUserComment = [
@@ -10,26 +11,24 @@ const createUserComment = [
     async (req, res) => {
         const error = validationResult(req);
         if (!error.isEmpty()) {
-            return 
+            return res.status(400).json({error: error.array()})
         }
-        const {  } = matchedData(req);
-        const posts = await commentService.createComment(Number(req.params.postId), );
-        res.json(posts);
+        const { comment } = matchedData(req);
+        await commentService.createComment(comment, req.user.id, Number(req.params.postId));
     }
 ]
 
 async function deleteUserComment(req, res) {
-    const post = await commentService.deleteComment(Number(req.params.id));
-    res.json(post);
+    await commentService.deleteComment(Number(req.params.id));
 }
 
 async function likeUserComment(req, res) {
-    const user = 
+    const user = req.user.id;
     await commentService.addCommentLike(user, Number(req.params.id))
 }
 
 async function unlikeUserComment(req, res) {
-    const user = 
+    const user = req.user.id;
     await commentService.removeCommentLike(user, Number(req.params.id))
 }
 

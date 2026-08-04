@@ -19,7 +19,7 @@ app.use(express.json())
 
 app.use('/api/', authRouter);
 app.use('/api/posts', postRouter);
-app.use('/api/post/:id/comment',passport_jwt.authenticate('jwt', {session: false}), commentRouter);
+app.use('/api/post/:postId/comment',passport_jwt.authenticate('jwt', {session: false}), commentRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

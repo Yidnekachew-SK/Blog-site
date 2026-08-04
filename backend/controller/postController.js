@@ -26,8 +26,11 @@ const validateCreatePost = [
 async function createPost(req, res) {
     const error = validationResult(req);
     if (!error.isEmpty()) {
-        return res.status(400).json(error.array());
+        return res.status(400).json({errors: error.array()});
     }
+
+    const {title, body} = matchedData(req);
+    await postService.createPost(title, body, Number(req.params.id));
 }
 
 async function updatePost(req, res) {

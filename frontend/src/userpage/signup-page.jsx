@@ -1,10 +1,13 @@
 import { useState } from "react"
+import Nav from "../components/nav";
+import { useOutletContext } from "react-router-dom";
 
 function SignUp() {
     const [signupInfo, setSignupInfo] = useState({ name:"", username:"", password:"" });
     const [errors, setErrors] = useState([]);
+    const {setUser} = useOutletContext();
 
-    const handleSignup = async function(e) {
+    const HandleSignup = async function(e) {
         e.preventDefault();
 
         try {
@@ -26,6 +29,7 @@ function SignUp() {
             }
 
             localStorage.setItem("token", data.token);
+            setUser(data.user);
 
             window.location.href = "/posts";
         } catch (err) {
@@ -35,6 +39,7 @@ function SignUp() {
 
     return(
         <>
+        <Nav />
         { errors.length > 0 && 
             <ul>
                 {errors.forEach(error => {
@@ -42,7 +47,7 @@ function SignUp() {
                 })}
             </ul>
         }
-        <form onSubmit={handleSignup}>
+        <form onSubmit={HandleSignup}>
             <label htmlFor="name">Name: </label>
             <input type="text" name="fullName" id="name" 
                 value={signupInfo.name} onChange={(e) => setSignupInfo((prev) => ({...prev, name: e.target.value}))} />

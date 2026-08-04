@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import Nav from "../components/nav";
+
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState(["", ""]);
+    const {setUser} = useOutletContext();
 
-    const handleLogin = async function(e) {
+    const HandleLogin = async function(e) {
         e.preventDefault();
 
         try {
@@ -23,14 +27,17 @@ function Login() {
             }
 
             localStorage.setItem("token", data.token);
-
+            setUser(data.user);
+            
             window.location.href = "/posts";
         } catch (err) {
             console.error(err);
         }
     }
     return(
-        <form onSubmit={handleLogin}>
+        <>
+        <Nav />
+        <form onSubmit={HandleLogin}>
             <div>
                 <label htmlFor="username">Username: </label>
                 <input type="text" name="username" id="username" 
@@ -45,6 +52,7 @@ function Login() {
             </div>
             <button type="submit">Login</button>
         </form>
+        </>
     )
 }
 

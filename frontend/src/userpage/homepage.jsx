@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+
 import PostCard from "../components/postCard";
 import Nav from "../components/nav";
+import '../styles/homepage-styles.css'
 
 function Homepage() {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("")
-    const isLoggedIn = !!localStorage.getItem("token");
+    const {isLoggedIn} = useOutletContext();
 
     useEffect(() => {
         (async () => {
@@ -24,13 +27,15 @@ function Homepage() {
         })();
     }, []);
 
+    if (error) return <p>{error}</p>;
+    if (!posts) return <p>Loading posts...</p>;
+
     return(
         <>
             <Nav isLoggedIn={isLoggedIn}/>
-            {error && <p className="error">{error}</p>}
-            <div className="mainSection"> 
+            <div className="mainSection">
                 {posts.map((post) => (
-                    <PostCard key={post.id} post={post}/>
+                    <PostCard key={post.id} post={post} />
                 ))}
             </div>
         </>

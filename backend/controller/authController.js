@@ -10,7 +10,10 @@ async function login(req, res, next, user) {
         process.env.SECRET,
         { expiresIn: "1h" }
         );
-        res.json({ token });
+        res.json({ token, user: {
+            id: user.id,
+            username: user.username
+        }});
     } catch (err) {
         next(err);
     }
@@ -42,7 +45,10 @@ const signup = [
         process.env.SECRET,
         { expiresIn: "1h" }
         );
-        res.json({ token });
+        res.json({ token, user: {
+            id: user.id,
+            username: user.username
+        }});
     }
 ]
 
