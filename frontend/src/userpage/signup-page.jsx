@@ -1,11 +1,13 @@
 import { useState } from "react"
 import Nav from "../components/nav";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function SignUp() {
     const [signupInfo, setSignupInfo] = useState({ name:"", username:"", password:"" });
     const [errors, setErrors] = useState([]);
     const {setUser} = useOutletContext();
+
+    const navigate = useNavigate();
 
     const HandleSignup = async function(e) {
         e.preventDefault();
@@ -31,7 +33,7 @@ function SignUp() {
             localStorage.setItem("token", data.token);
             setUser(data.user);
 
-            window.location.href = "/posts";
+            navigate("/");
         } catch (err) {
             console.error(err);
         }
@@ -39,7 +41,7 @@ function SignUp() {
 
     return(
         <>
-        <Nav />
+        <Nav setUser={setUser}/>
         { errors.length > 0 && 
             <ul>
                 {errors.forEach(error => {

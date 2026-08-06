@@ -8,12 +8,15 @@ import '../styles/homepage-styles.css'
 function Homepage() {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("")
-    const {isLoggedIn} = useOutletContext();
+    const {isLoggedIn, user, setUser} = useOutletContext();
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         (async () => {
         try {
-            const response = await fetch("/api/posts");
+            const response = await fetch("/api/posts", {
+                headers: {Authorization: `Bearer ${token}`}
+            });
 
             if (!response.ok) {
                 throw new Error("Failed to fetch posts");
@@ -32,7 +35,10 @@ function Homepage() {
 
     return(
         <>
-            <Nav isLoggedIn={isLoggedIn}/>
+            <Nav isLoggedIn={isLoggedIn} setUser={setUser}/>
+            {user?.role === "Admin" && 
+                <Link to="/admin">Go to Admin page</Link>
+            }
             <div className="mainSection">
                 {posts.map((post) => (
                     <PostCard key={post.id} post={post} />

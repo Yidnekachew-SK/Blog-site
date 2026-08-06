@@ -4,13 +4,18 @@ function CommentForm({userId, postId, setDisplayForm}) {
     const [comment, setComment] = useState("");
     const [error, setError] = useState("");
 
+    const token = localStorage.getItem("token");
+
     const handleAddComment = async function(e) {
         e.preventDefault();
 
         try {
             const response = await fetch(`/api/post/${postId}/comment`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json", 
+                    Authorization: `Bearer ${token}`
+                },
                 body: JSON.stringify({ comment, userId, postId }),
             });
 
@@ -37,7 +42,7 @@ function CommentForm({userId, postId, setDisplayForm}) {
                 </textarea>
 
                 <div>
-                    <button type="button" onClick={setDisplayForm(false)}>Cancel</button>
+                    <button type="button" onClick={() => setDisplayForm(false)}>Cancel</button>
                     <button type="submit">Add Comment</button>
                 </div>
             </form>

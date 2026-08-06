@@ -1,5 +1,6 @@
 const { body, validationResult, matchedData } = require('express-validator');
 const commentService = require("../services/commentService");
+const { prisma } = require('../lib/prisma');
 
 const validateUserComment = [
     body("comment").trim()
@@ -19,7 +20,20 @@ const createUserComment = [
 ]
 
 async function deleteUserComment(req, res) {
-    await commentService.deleteComment(Number(req.params.id));
+    try {
+        const commentId = Number(req.params.id);
+
+        await prisma.commentLikes.deleteMany({
+            where: { commentId },
+        });
+        
+        await commentService.deleteComment(commentId);
+
+        res.json({ message: "comment deleted" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delete comment" });
+    }
 }
 
 async function likeUserComment(req, res) {

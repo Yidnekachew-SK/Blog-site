@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import Nav from "../components/nav";
 
 
@@ -8,6 +8,8 @@ function Login() {
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState(["", ""]);
     const {setUser} = useOutletContext();
+
+    const navigate = useNavigate();
 
     const HandleLogin = async function(e) {
         e.preventDefault();
@@ -28,15 +30,16 @@ function Login() {
 
             localStorage.setItem("token", data.token);
             setUser(data.user);
+            console.log('user', data.user)
             
-            window.location.href = "/posts";
+            navigate("/");
         } catch (err) {
             console.error(err);
         }
     }
     return(
         <>
-        <Nav />
+        <Nav setUser={setUser}/>
         <form onSubmit={HandleLogin}>
             <div>
                 <label htmlFor="username">Username: </label>

@@ -5,12 +5,33 @@ import Login from './userpage/login-page';
 import SignUp from './userpage/signup-page';
 import Homepage from './userpage/homepage';
 import PostDetail from "./userpage/post-page";
+import AdminPostDetail from "./adminPage/post";
+import Dashboard from "./adminPage/admin dashboard";
 
 function App() {
   const ContextProvider = function() {
     const [user, setUser] = useState(null);
-    const hasToken = !!localStorage.getItem("token");
+    useEffect(() => {
+      const token = localStorage.getItem("token");
 
+      if (token) {
+        (async () => {
+          try {
+            const response = await fetch("/api/me", {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (response.ok) {
+              const data = await response.json();
+              setUser(data.user);
+            }
+          } catch (err) {
+            console.error("Failed to restore user", err);
+          }
+        })();
+      }
+    }, []);
+    
+    const hasToken = !!localStorage.getItem("token");
     const isLoggedIn = !!user && hasToken;
 
     return <Outlet context={{ user, setUser, isLoggedIn }} />
@@ -25,6 +46,14 @@ function App() {
         { path: "login", element: <Login /> },
         { path: "signup", element: <SignUp /> },
         { path: "post-detail/:id", element: <PostDetail /> },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <ContextProvider />,
+      children: [
+        { index: true, element: <Dashboard /> },
+        { path: "post/:id", element: <AdminPostDetail /> },
       ],
     },
   ]);

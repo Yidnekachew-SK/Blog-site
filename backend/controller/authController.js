@@ -12,7 +12,8 @@ async function login(req, res, next, user) {
         );
         res.json({ token, user: {
             id: user.id,
-            username: user.username
+            username: user.username,
+            role: user.role
         }});
     } catch (err) {
         next(err);
@@ -47,7 +48,8 @@ const signup = [
         );
         res.json({ token, user: {
             id: user.id,
-            username: user.username
+            username: user.username,
+            role: user.role
         }});
     }
 ]

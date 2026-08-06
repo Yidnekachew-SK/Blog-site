@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import Comment from "../components/comment";
 import CommentForm from "../components/commentForm";
+import Nav from "../components/nav";
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -9,12 +10,16 @@ function PostDetail() {
     const [displayForm, setDisplayForm] = useState(false);
 
     const { id } = useParams();
-    const {isLoggedIn, user} = useOutletContext();
+    const {isLoggedIn, user, setUser} = useOutletContext();
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
         (async () => {
         try {
-            const response = await fetch(`/api/posts/${id}`,);
+            const response = await fetch(`/api/posts/${id}`, {
+                method: "GET",
+                headers: {Authorization: `Bearer ${token}`}
+            });
 
             if (!response.ok) {
                 throw new Error("Failed to fetch the post");
@@ -32,6 +37,8 @@ function PostDetail() {
     if (!post) return <p>Loading post...</p>;
 
     return(
+        <>
+        <Nav isLoggedIn={isLoggedIn} setUser={setUser}/>
         <div className="postDisplayer">
             <div className="postSection">
                 <h2>{post.title}</h2>
@@ -46,16 +53,17 @@ function PostDetail() {
                         <button type="button" onClick={() => setDisplayForm(true)}>Add comment</button>
                     </div>
                     {displayForm && 
-                        <CommentForm userId={user.id} postId={id} setDisplayForm={setDisplayForm}/>
+                        <CommentForm userId={user.id} postId={Number(id)} setDisplayForm={setDisplayForm}/>
                     }
                     <div className="commentSection">
                         {post?.comments?.map((comment) => (
-                            <Comment comment={comment} user={user} />
+                            <Comment key={comment.id} comment={comment} user={user} />
                         ))}
                     </div>
                 </div>
             }
         </div>
+        </>
     )
 }
 
