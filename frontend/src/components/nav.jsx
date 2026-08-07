@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import '../styles/user styles/nav-styles.css';
 
 function Nav({isLoggedIn, setUser}) {
     const navigate = useNavigate();
-    
+
     const Logout = async function() {
         localStorage.removeItem("token");
         setUser(null);

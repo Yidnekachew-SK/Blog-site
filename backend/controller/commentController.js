@@ -16,6 +16,7 @@ const createUserComment = [
         }
         const { comment } = matchedData(req);
         await commentService.createComment(comment, req.user.id, Number(req.params.postId));
+        res.json({message: 'comment is added'});
     }
 ]
 

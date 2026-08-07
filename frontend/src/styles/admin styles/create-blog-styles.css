@@ -1,0 +1,26 @@
+.header {
+    text-align: center;
+}
+
+.blogFormSection {
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.blogForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+label {
+    font-size: 17px;
+}
+
+#title {
+    width: 30%;
+}

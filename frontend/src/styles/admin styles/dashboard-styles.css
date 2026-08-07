@@ -1,0 +1,26 @@
+.adminPageOptions {
+    padding: 7px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.option {
+    height: 20px;
+}
+
+select {
+    width: 40%;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.adminLinks {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.adminLink {
+    text-decoration: none;
+    font-size: 18px;
+}

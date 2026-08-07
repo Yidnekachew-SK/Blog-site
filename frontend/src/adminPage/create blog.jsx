@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import Nav from '../components/nav';
-
+import '../styles/admin styles/create-blog-styles.css';
 
 function CreateBlog() {
     const [title, setTitle] = useState("");
@@ -49,21 +49,17 @@ function CreateBlog() {
     return(
         <>
         <Nav isLoggedIn={isLoggedIn} setUser={setUser} />
-        <div>
-            <h2>Create Blog Post</h2>
-            {error && <p>{error}</p>}
+        <div className="blogFormSection">
+            <h2 className="header">Create Blog Post</h2>
+            {error && <p className="error">{error}</p>}
 
-            <form onSubmit={HandleSubmit}>
-                <div>
-                    <label htmlFor='title'>Title:</label>
-                    <input type="text" id='title' name='title' value={title}
-                        onChange={(e) => setTitle(e.target.value)} required />
-                </div>
+            <form onSubmit={HandleSubmit} className="blogForm">
+                <label htmlFor='title'>Title:</label>
+                <input type="text" id='title' name='title' value={title}
+                    onChange={(e) => setTitle(e.target.value)} required />
 
-                <div>
-                    <label htmlFor='editor'>Body:</label>
-                    <textarea id="editor" name='body' cols={150} rows={40}/>
-                </div>
+                <label htmlFor='editor'>Body:</label>
+                <textarea id="editor" name='body' cols={120} rows={30} required/>
 
                 <button type="submit">Create Post</button>
             </form>

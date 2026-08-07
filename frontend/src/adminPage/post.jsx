@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
 import Comment from "../components/comment";
 import Nav from "../components/nav";
+import '../styles/admin styles/post-styles.css';
 
 function AdminPostDetail() {
     const [post, setPost] = useState(null);
@@ -94,6 +96,7 @@ function AdminPostDetail() {
     if (user?.role != "Admin") return <p>Not Authorized</p>
     if (error) return <p>{error}</p>;
     if (!post) return <p>Loading posts...</p>;
+    const formatedDate = format(new Date(post?.createdAt), "MMM dd,yyyy hh:mm a");
 
     return(
         <>
@@ -101,23 +104,23 @@ function AdminPostDetail() {
         <div className="postContainer">
             <div className="postSection">
                 <div>
-                    <div>
+                    <div className="adminPostButtons">
                         <button type="button" key={`publish-${post.id}`} onClick={() => HandlePostPublish(post.id)}>{post.status === "published" ? "unpublish" : "publish"}</button>
                         <button type="button" key={`delete-${post.id}`} onClick={() => HandlePostDelete(post.id)}>Delete</button>
                     </div>
-                    <h2>{post.title}</h2>
-                    <p>Created At: {post.createdAt}</p>
-                    <p>{post.article}</p>
+                    <h2 className="blogHeader">{post.title}</h2>
+                    <p className="blogDate">Created At: {formatedDate}</p>
+                    <p className="blogArticle">{post.article}</p>
                 </div>
             </div>
 
-            <div>
+            <div className="commentSection">
                 <h3>Comments</h3>
                 <div className="commentSection">
                     {post?.comments?.map((comment) => (
-                        <div key={`comment-container-${comment.id}`}>
+                        <div key={`comment-container-${comment.id}`} className="comments">
                             <Comment key={comment.id} comment={comment} user={user} />
-                            <button type="button" key={`button-${comment.id}`} onClick={() => HandleCommentDelete(comment.id, post.id)}>Delete</button>
+                            <button type="button" key={`button-${comment.id}`} className="deleteButton" onClick={() => HandleCommentDelete(comment.id, post.id)}>Delete</button>
                         </div>
                     ))}
                 </div>

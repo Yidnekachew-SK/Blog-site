@@ -3,7 +3,7 @@ import { Link, useOutletContext } from "react-router-dom";
 
 import PostCard from "../components/postCard";
 import Nav from "../components/nav";
-import '../styles/homepage-styles.css'
+import '../styles/user styles/homepage-styles.css';
 
 function Homepage() {
     const [posts, setPosts] = useState([]);
@@ -37,7 +37,7 @@ function Homepage() {
         <>
             <Nav isLoggedIn={isLoggedIn} setUser={setUser}/>
             {user?.role === "Admin" && 
-                <Link to="/admin">Go to Admin page</Link>
+                <Link to="/admin" className="adminPageLink">Go to Admin page</Link>
             }
             <div className="mainSection">
                 {posts.map((post) => (

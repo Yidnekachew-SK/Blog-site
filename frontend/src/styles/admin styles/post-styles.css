@@ -1,0 +1,27 @@
+.postContainer {
+    min-height: 90vh;
+}
+
+.adminPostButtons {
+    padding: 7px 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    justify-items: flex-start;
+}
+
+.adminPostButtons button, .deleteButton {
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.comments {
+    display: grid;
+    grid-template-columns: 1fr 0.2fr;
+    align-items: center;
+}
+
+.deleteButton {
+    justify-self: center;
+}

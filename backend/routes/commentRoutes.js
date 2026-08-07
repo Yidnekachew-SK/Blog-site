@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const commentController = require('../controller/commentController');
 
-const commentRouter = Router();
+const commentRouter = Router({ mergeParams: true });
 
 commentRouter.post('/', commentController.createUserComment);
 

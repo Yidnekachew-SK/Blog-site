@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
+import { format } from 'date-fns';
+import '../styles/user styles/homepage-styles.css';
 
 function PostCard({post, isAdmin}) {
+    const formatedDate = format(new Date(post.createdAt), "MMM dd,yyyy hh:mm a");
     return(
         <div id={post.id} className="postCard">
-            <p>{post.title}</p>
-            <p>{post.article}</p>
-            <p>{post.createdAt}</p>
+            <p className="blogTitle">{post.title}</p>
+            <p className="blogParagraph">{post.article}</p>
+            <p className="blogDate">{formatedDate}</p>
             {isAdmin === true ? 
-                <Link to={`/admin/post/${post.id}`}>Open</Link> :
-                <Link to={`/post-detail/${post.id}`}>Open</Link> 
+                <Link to={`/admin/post/${post.id}`} className="blogLink">Open</Link> :
+                <Link to={`/post-detail/${post.id}`} className="blogLink">Open</Link> 
             }
         </div>
     )

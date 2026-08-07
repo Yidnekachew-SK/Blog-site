@@ -33,7 +33,7 @@ function App() {
     }, []);
     
     const hasToken = !!localStorage.getItem("token");
-    const isLoggedIn = !!user && hasToken;
+    const isLoggedIn = !!user;
 
     return <Outlet context={{ user, setUser, isLoggedIn }} />
   }

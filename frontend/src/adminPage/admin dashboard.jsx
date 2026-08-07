@@ -3,6 +3,7 @@ import { Link, useOutletContext } from "react-router-dom";
 
 import PostCard from "../components/postCard";
 import Nav from "../components/nav";
+import '../styles/admin styles/dashboard-styles.css'
 
 function Dashboard() {
     const [publishedPosts, setPublishedPosts] = useState([]);
@@ -62,19 +63,18 @@ function Dashboard() {
     return(
         <>
             <Nav isLoggedIn={isLoggedIn} setUser={setUser}/>
-            <div>
-                <div>
-                    <label htmlFor="postOption"></label>
-                    <select name="option" id="postOption" value={option} onChange={HandlePostOption}>
-                        <option value="published">Published Posts</option>
-                        <option value="unpublished">Unpublished Posts</option>
-                    </select>
+            <div className="adminPageOptions">
+                <select name="option" id="postOption" value={option} onChange={HandlePostOption}>
+                    <option value="published">Published Posts</option>
+                    <option value="unpublished">Unpublished Posts</option>
+                </select>
+                <div className="adminLinks">
+                    <Link to="/admin/create/post" className="adminLink">create blog</Link>
+                    <Link to="/" className="adminLink">Go back to user page</Link>
                 </div>
-                <Link to="/admin/create/post">create blog</Link>
-                <Link to="/">Go back to user page</Link>
             </div>
 
-            <div className="dashboard">
+            <div className="dashboard mainSection">
                 {option === 'published' ? 
                     <>
                     {publishedPosts.map((post) => (
