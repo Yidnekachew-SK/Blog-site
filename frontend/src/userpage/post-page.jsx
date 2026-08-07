@@ -14,13 +14,13 @@ function PostDetail() {
 
     const navigate = useNavigate();
     const { id } = useParams();
-    const {isLoggedIn, user, setUser} = useOutletContext();
+    const {isLoggedIn, user, setUser, api} = useOutletContext();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         (async () => {
         try {
-            const response = await fetch(`/api/posts/${id}`, {
+            const response = await fetch(`${api}/posts/${id}`, {
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             });
@@ -61,7 +61,8 @@ function PostDetail() {
                         <button type="button" className="addCommentButton" onClick={() => setDisplayForm(true)}>Add comment</button>
                     </div>
                     {displayForm && 
-                        <CommentForm userId={user.id} postId={Number(id)} setDisplayForm={setDisplayForm} setHasChanged={setHasChanged} />
+                        <CommentForm userId={user.id} postId={Number(id)} setDisplayForm={setDisplayForm} 
+                            setHasChanged={setHasChanged} api={api} />
                     }
                     <div className="userComments">
                         {post?.comments?.map((comment) => (

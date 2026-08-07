@@ -2,6 +2,8 @@ const express = require('express');
 const methodOverride = require('method-override');
 const passport_jwt = require('./middleware/passport-jwt');
 const passport_local = require('./middleware/passport');
+const cors = require('cors');
+require('dotenv').config();
 
 const authRouter = require('./routes/authRoutes');
 const postRouter = require('./routes/postRoutes');
@@ -9,6 +11,11 @@ const commentRouter = require('./routes/commentRoutes');
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+app.use(cors({
+  origin: ['http://localhost:5173', process.env.FRONTEND_URL],
+  credentials: true
+}));
 
 app.use(passport_jwt.initialize());
 app.use(passport_local.initialize());

@@ -10,14 +10,14 @@ function CreateBlog() {
     const token = localStorage.getItem("token");
 
     const navigate = useNavigate();
-    const {isLoggedIn, setUser} = useOutletContext();
+    const {isLoggedIn, setUser, api} = useOutletContext();
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
         try {
-            const response = await fetch("/api/posts", {
+            const response = await fetch(`${api}/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

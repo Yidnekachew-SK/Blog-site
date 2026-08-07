@@ -10,6 +10,8 @@ import Dashboard from "./adminPage/admin dashboard";
 import CreateBlog from "./adminPage/create blog";
 
 function App() {
+  const api = import.meta.env.VITE_API_URL;
+
   const ContextProvider = function() {
     const [user, setUser] = useState(null);
     useEffect(() => {
@@ -18,7 +20,7 @@ function App() {
       if (token) {
         (async () => {
           try {
-            const response = await fetch("/api/me", {
+            const response = await fetch(`${api}/me`, {
               headers: { Authorization: `Bearer ${token}` },
             });
             if (response.ok) {
@@ -35,7 +37,7 @@ function App() {
     const hasToken = !!localStorage.getItem("token");
     const isLoggedIn = !!user;
 
-    return <Outlet context={{ user, setUser, isLoggedIn }} />
+    return <Outlet context={{ user, setUser, isLoggedIn, api }} />
   }
 
   const router = createBrowserRouter([

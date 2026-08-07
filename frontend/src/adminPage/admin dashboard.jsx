@@ -11,7 +11,7 @@ function Dashboard() {
     const [error, setError] = useState("");
     const [option, setOption] = useState('published');
 
-    const {isLoggedIn, user, setUser} = useOutletContext();
+    const {isLoggedIn, user, setUser, api} = useOutletContext();
 
     const token = localStorage.getItem("token");
 
@@ -22,7 +22,7 @@ function Dashboard() {
 
     const fetchPublishedPosts = async function() {
         try {
-            const response = await fetch("/api/posts");
+            const response = await fetch(`${api}/posts`);
 
             if (!response.ok) {
                 throw new Error("Failed to fetch posts");
@@ -37,7 +37,7 @@ function Dashboard() {
 
     const fetchUnpublishedPosts = async function() {
         try {
-            const response = await fetch("/api/posts/unpublished", {
+            const response = await fetch(`${api}/posts/unpublished`, {
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             });

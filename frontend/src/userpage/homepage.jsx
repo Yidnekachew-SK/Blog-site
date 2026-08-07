@@ -8,13 +8,13 @@ import '../styles/user styles/homepage-styles.css';
 function Homepage() {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("")
-    const {isLoggedIn, user, setUser} = useOutletContext();
+    const {isLoggedIn, user, setUser, api} = useOutletContext();
     const token = localStorage.getItem("token");
 
     useEffect(() => {
         (async () => {
         try {
-            const response = await fetch("/api/posts", {
+            const response = await fetch(`${api}/posts`, {
                 headers: {Authorization: `Bearer ${token}`}
             });
 

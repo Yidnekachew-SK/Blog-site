@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/user styles/postpage-styles.css';
 
-function CommentForm({userId, postId, setDisplayForm, setHasChanged}) {
+function CommentForm({userId, postId, setDisplayForm, setHasChanged, api}) {
     const [comment, setComment] = useState("");
     const [error, setError] = useState("");
 
@@ -13,7 +13,7 @@ function CommentForm({userId, postId, setDisplayForm, setHasChanged}) {
         e.preventDefault();
 
         try {
-            const response = await fetch(`/api/post/${postId}/comment`, {
+            const response = await fetch(`${api}/post/${postId}/comment`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json", 

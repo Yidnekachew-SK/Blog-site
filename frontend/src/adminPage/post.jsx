@@ -12,13 +12,13 @@ function AdminPostDetail() {
     const token = localStorage.getItem("token");
 
     const navigate = useNavigate();
-    const {isLoggedIn, user, setUser} = useOutletContext();
+    const {isLoggedIn, user, setUser, api} = useOutletContext();
     const { id } = useParams();
 
     useEffect(() => {
         (async () => {
         try {
-            const response = await fetch(`/api/posts/${id}`, {
+            const response = await fetch(`${api}/posts/${id}`, {
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             });
@@ -37,7 +37,7 @@ function AdminPostDetail() {
 
     const HandlePostDelete = async function(postId) {
         try {
-            const response = await fetch(`/api/posts/${postId}`, {
+            const response = await fetch(`${api}/posts/${postId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -56,7 +56,7 @@ function AdminPostDetail() {
         let status = post.status === "published" ? "unpublished" : "published";
 
         try {
-            const response = await fetch(`/api/posts/${postId}`, {
+            const response = await fetch(`${api}/posts/${postId}`, {
                 method: "PUT",
                 headers: { 
                     "Content-Type": "application/json",
@@ -77,7 +77,7 @@ function AdminPostDetail() {
 
     const HandleCommentDelete = async function(commentId, postId) {
         try {
-            const response = await fetch(`/api/post/${postId}/comment/${commentId}`, {
+            const response = await fetch(`${api}/post/${postId}/comment/${commentId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
             });
