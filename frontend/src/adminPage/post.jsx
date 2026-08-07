@@ -9,6 +9,7 @@ function AdminPostDetail() {
     const [hasChanged, setHasChanged] = useState(false);
     const token = localStorage.getItem("token");
 
+    const navigate = useNavigate();
     const {isLoggedIn, user, setUser} = useOutletContext();
     const { id } = useParams();
 
@@ -26,7 +27,6 @@ function AdminPostDetail() {
 
             const data = await response.json();
             setPost(data);
-            setHasChanged(false);
         } catch (err) {
             setError(err.message);
         }
@@ -67,7 +67,7 @@ function AdminPostDetail() {
                 throw new Error("Failed to update post");
             }
 
-            setHasChanged(true);
+            setHasChanged(prev => !prev);
         } catch (err) {
             setError(err.message);
         }
@@ -85,7 +85,7 @@ function AdminPostDetail() {
             }
 
             const data = await response.json();
-            setHasChanged(false);
+            setHasChanged(prev => !prev);
         } catch (err) {
             setError(err.message);
         }

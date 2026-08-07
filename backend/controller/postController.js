@@ -22,7 +22,7 @@ const validateCreatePost = [
     body('title').trim()
         .matches(/^[a-zA-Z\s.,'"!?-]+$/).withMessage('Invalid input, only use letters and punctuation marks.'),
     body('body').trim()
-        .matches(/^[a-zA-Z0-9\s.,'"!?-]+$/).withMessage('The body must only be letters, numbers or punctuation marks.')
+        .matches(/^[a-zA-Z0-9\s.,'"!?`<>\-\/=;:()!?\[\]]+$/).withMessage('The body must only be letters, numbers or punctuation marks.')
 ]
 
 const createPost =  [

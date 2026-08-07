@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function Nav({isLoggedIn, setUser}) {
+    const navigate = useNavigate();
+    
     const Logout = async function() {
-        localStorage.removeItem("token", data.token);
+        localStorage.removeItem("token");
         setUser(null);
-        Navigate("/");
+        navigate("/");
     }
 
     return(

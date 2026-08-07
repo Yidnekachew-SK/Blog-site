@@ -30,15 +30,15 @@ async function createPost(title, body, date) {
         data: {
             title,
             article: body,
-            createdAt: date
+            createdAt: new Date()
         }
     });
 }
 
-async function UpdatePost(postId, updatedData) {
+async function updatePost(postId, updatedData) {
     await prisma.posts.update({
         where: { id: postId },
-        data: { updatedData }
+        data: { ...updatedData }
     });
 }
 
@@ -53,6 +53,6 @@ module.exports = {
     getUnpublishedPosts,
     getSinglePostWithComments,
     createPost,
-    UpdatePost,
+    updatePost,
     deletePost
 }

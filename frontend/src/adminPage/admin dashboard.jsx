@@ -8,7 +8,7 @@ function Dashboard() {
     const [publishedPosts, setPublishedPosts] = useState([]);
     const [unpublishedPosts, setUnpublishedPosts] = useState([]);
     const [error, setError] = useState("");
-    const [option, setOption] = useState('');
+    const [option, setOption] = useState('published');
 
     const {isLoggedIn, user, setUser} = useOutletContext();
 
@@ -70,6 +70,7 @@ function Dashboard() {
                         <option value="unpublished">Unpublished Posts</option>
                     </select>
                 </div>
+                <Link to="/admin/create/post">create blog</Link>
                 <Link to="/">Go back to user page</Link>
             </div>
 

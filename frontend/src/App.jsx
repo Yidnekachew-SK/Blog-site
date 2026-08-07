@@ -7,6 +7,7 @@ import Homepage from './userpage/homepage';
 import PostDetail from "./userpage/post-page";
 import AdminPostDetail from "./adminPage/post";
 import Dashboard from "./adminPage/admin dashboard";
+import CreateBlog from "./adminPage/create blog";
 
 function App() {
   const ContextProvider = function() {
@@ -54,6 +55,7 @@ function App() {
       children: [
         { index: true, element: <Dashboard /> },
         { path: "post/:id", element: <AdminPostDetail /> },
+        { path: "create/post", element: <CreateBlog /> }
       ],
     },
   ]);

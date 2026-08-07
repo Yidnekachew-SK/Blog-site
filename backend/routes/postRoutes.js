@@ -10,7 +10,7 @@ postRouter.get('/unpublished', passport_jwt.authenticate('jwt', {session: false}
 
 postRouter.get('/:id', passport_jwt.authenticate('jwt', {session: false}), postContoller.getPostWithComments);
 
-postRouter.post('/:id', passport_jwt.authenticate('jwt', {session: false}), postContoller.createPost);
+postRouter.post('/', passport_jwt.authenticate('jwt', {session: false}), postContoller.createPost);
 
 postRouter.put('/:id', passport_jwt.authenticate('jwt', {session: false}), postContoller.updatePost);
 
