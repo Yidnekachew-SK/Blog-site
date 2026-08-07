@@ -17,7 +17,7 @@ function CreateBlog() {
         setError(null);
 
         try {
-            const response = await fetch(`${api}/posts`, {
+            const response = await fetch(`${api}/api/posts`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

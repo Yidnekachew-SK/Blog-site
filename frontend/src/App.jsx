@@ -20,7 +20,7 @@ function App() {
       if (token) {
         (async () => {
           try {
-            const response = await fetch(`${api}/me`, {
+            const response = await fetch(`${api}/api/me`, {
               headers: { Authorization: `Bearer ${token}` },
             });
             if (response.ok) {

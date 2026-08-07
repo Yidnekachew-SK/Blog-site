@@ -20,7 +20,7 @@ function PostDetail() {
         const token = localStorage.getItem("token");
         (async () => {
         try {
-            const response = await fetch(`${api}/posts/${id}`, {
+            const response = await fetch(`${api}/api/posts/${id}`, {
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             });

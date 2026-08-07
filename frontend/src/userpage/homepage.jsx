@@ -14,7 +14,7 @@ function Homepage() {
     useEffect(() => {
         (async () => {
         try {
-            const response = await fetch(`${api}/posts`, {
+            const response = await fetch(`${api}/api/posts`, {
                 headers: {Authorization: `Bearer ${token}`}
             });
 

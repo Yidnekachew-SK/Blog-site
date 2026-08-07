@@ -13,7 +13,7 @@ function CommentForm({userId, postId, setDisplayForm, setHasChanged, api}) {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${api}/post/${postId}/comment`, {
+            const response = await fetch(`${api}/api/post/${postId}/comment`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json", 
