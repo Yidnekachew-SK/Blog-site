@@ -7,7 +7,7 @@ function PostCard({post, isAdmin}) {
     return(
         <div id={post.id} className="postCard">
             <p className="blogTitle">{post.title}</p>
-            <p className="blogParagraph">{post.article}</p>
+            <div className="blogParagraph" dangerouslySetInnerHTML={{ __html: post.article }} />
             <p className="blogDate">{formatedDate}</p>
             {isAdmin === true ? 
                 <Link to={`/admin/post/${post.id}`} className="blogLink">Open</Link> :

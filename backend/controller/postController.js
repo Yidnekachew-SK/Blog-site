@@ -18,29 +18,15 @@ async function getPostWithComments(req, res) {
     res.json(post);
 }
 
-const validateCreatePost = [
-    body('title').trim()
-        .matches(/^[a-zA-Z\s.,'"!?-]+$/).withMessage('Invalid input, only use letters and punctuation marks.'),
-    body('body').trim()
-        .matches(/^[a-zA-Z0-9\s.,'"!?`<>\-\/=;:()!?\[\]]+$/).withMessage('The body must only be letters, numbers or punctuation marks.')
-]
-
-const createPost =  [
-    validateCreatePost,
-    async (req, res) => {
-        if (req.user.role != 'Admin') {
-            res.status(403).json({ error: "Forbidden" });
-        }
-        const error = validationResult(req);
-        if (!error.isEmpty()) {
-            return res.status(400).json({errors: error.array()});
-        }
-
-        const {title, body} = matchedData(req);
-        await postService.createPost(title, body, Number(req.params.id));
-        res.json({message: 'post created'});
+// allow without server side validation
+async function createPost(req, res) {
+    if (req.user.role != 'Admin') {
+        res.status(403).json({ error: "Forbidden" });
     }
-]
+    const { title, article } = req.body;
+    await postService.createPost(title, article);
+    res.json({message: 'post created'});
+}
 
 async function updatePost(req, res) {
     if (req.user.role === 'Admin') {

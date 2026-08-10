@@ -51,7 +51,7 @@ function PostDetail() {
             <div className="postSection">
                 <h2 className="blogHeader">{post.title}</h2>
                 <p className="blogDate">Created At: {formatedDate}</p>
-                <p className="blogArticle">{post.article}</p>
+                <div className="blogArticle" dangerouslySetInnerHTML={{ __html: post.article }} />
             </div>
 
             {!isLoggedIn ? <p>Login to see comments</p> :
