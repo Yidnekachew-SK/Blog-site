@@ -13,10 +13,9 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173', "https://yidnekachewsk-blog-site.netlify.app/"],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  origin: ['http://localhost:5173', "https://yidnekachewsk-blog-site.netlify.app"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(passport_jwt.initialize());
